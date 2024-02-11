@@ -1,30 +1,55 @@
 // Uncomment the code below and write your tests
-// import { throwError, throwCustomError, resolveValue, MyAwesomeError, rejectCustomError } from './index';
+import {
+  throwError,
+  throwCustomError,
+  resolveValue,
+  MyAwesomeError,
+  rejectCustomError,
+} from './index';
+
+jest.setTimeout(30000);
 
 describe('resolveValue', () => {
+  const value = NaN;
   test('should resolve provided value', async () => {
-    // Write your test here
+    expect(await resolveValue(value)).toBe(value);
   });
 });
 
 describe('throwError', () => {
+  const message: string = 'error message';
   test('should throw error with provided message', () => {
-    // Write your test here
+    expect.assertions(1);
+    try {
+      throwError(message);
+    } catch (error) {
+      expect(error).toEqual(Error(message));
+    }
   });
 
   test('should throw error with default message if message is not provided', () => {
-    // Write your test here
+    expect.assertions(1);
+    try {
+      throwError();
+    } catch (error) {
+      expect(error).toEqual(Error('Oops!'));
+    }
   });
 });
 
 describe('throwCustomError', () => {
   test('should throw custom error', () => {
-    // Write your test here
+    expect.assertions(1);
+    try {
+      throwCustomError();
+    } catch (error) {
+      expect(error).toEqual(new MyAwesomeError());
+    }
   });
 });
 
 describe('rejectCustomError', () => {
   test('should reject custom error', async () => {
-    // Write your test here
+    await expect(rejectCustomError()).rejects.toThrow(MyAwesomeError);
   });
 });
